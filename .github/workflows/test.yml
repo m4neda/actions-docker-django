@@ -6,16 +6,15 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     steps:
-    - uses: mirromutth/mysql-action@v1.1
-      with:
-        host port: 3800 # Optional, default value is 3306. The port of host
-        container port: 3307 # Optional, default value is 3306. The port of container
-        character set server: 'utf8mb4' # Optional, default value is 'utf8mb4'. The '--character-set-server' option for mysqld
-        collation server: 'utf8_general_ci' # Optional, default value is 'utf8mb4_general_ci'. The '--collation-server' option for mysqld
-        mysql version: '8.0' # Optional, default value is "latest". The version of the MySQL
-        mysql database: 'great_db' # Optional, default value is "test". The specified database which will be create
-        mysql root password: 'mysql' # Required if "mysql user" is empty, default is empty. The root superuser password
-
+      - uses: mirromutth/mysql-action@v1.1
+        with:
+          host port: 3800 # Optional, default value is 3306. The port of host
+          container port: 3307 # Optional, default value is 3306. The port of container
+          character set server: 'utf8mb4' # Optional, default value is 'utf8mb4'. The '--character-set-server' option for mysqld
+          collation server: 'utf8_general_ci' # Optional, default value is 'utf8mb4_general_ci'. The '--collation-server' option for mysqld
+          mysql version: '8.0' # Optional, default value is "latest". The version of the MySQL
+          mysql database: 'great_db' # Optional, default value is "test". The specified database which will be create
+          mysql root password: 'mysql' # Required if "mysql user" is empty, default is empty. The root superuser password
       - name: Build the docker-compose stack # Docker Composeを実行
         run: |
           sudo curl -L https://github.com/docker/compose/releases/download/1.16.1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
