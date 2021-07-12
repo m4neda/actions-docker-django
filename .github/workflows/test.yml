@@ -15,9 +15,9 @@ jobs:
           - 3306:3306
         options: --health-cmd "mysqladmin ping" --health-interval 10s --health-timeout 5s --health-retries 10
     steps:
-      - name: exec hoge.sql
-        run: |
-          mysql -h 127.0.0.1 --port 3306 -u root -phoge_password -e "$(cat $(find ./ -name hoge.sql))"
+#      - name: exec hoge.sql
+#        run: |
+#          mysql -h 127.0.0.1 --port 3306 -u root -phoge_password -e "$(cat $(find ./ -name hoge.sql))"
 
       - name: Build the docker-compose stack # Docker Composeを実行
         run: docker-compose up -d
