@@ -42,4 +42,4 @@ jobs:
         uses: mxschmitt/action-tmate@v3
 
       - name: Connect to PostgreSQL
-        run: python mintaku/manage.py runserver
+        run: python manage.py runserver
