@@ -13,12 +13,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Build the docker-compose stack # Docker Composeを実行
-        run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d
-
-      - name: Sleep to wait for preparing of containers
-        run: sleep 15 # ポイント③
-
+#      - name: Build the docker-compose stack # Docker Composeを実行
+#        run: docker-compose -f docker-compose.yml -f docker-compose.ci.yml up -d
+#
+#      - name: Sleep to wait for preparing of containers
+#        run: sleep 15 # ポイント③
+#
       - name: Setup tmate session
         uses: mxschmitt/action-tmate@v3
 
