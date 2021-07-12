@@ -1,23 +1,45 @@
-name: Test
+name: MySQL service example
 on: push
-jobs:
 
-  test:
-    name: Test
+jobs:
+  # コンテナジョブのラベル
+  container-job:
+    # コンテナは Linux ベースのオペレーティングシステムで実行しなければならない
     runs-on: ubuntu-latest
+    # `container-job` が実行される Docker Hub イメージ
+    container: python:3.7
+
+    # `container-job` で実行するサービスコンテナ
     services:
-      mysql:
-        image: mysql:5.7
-        ports:
-          - 3306:3306
+      # サービスコンテナへのアクセスに使用されるラベル
+      postgres:
+        # Docker Hub のイメージ
+        image: mysql:8
+        # postgres のパスワードを入力する
         env:
-          MYSQL_ROOT_PASSWORD: mysql
-          MYSQL_DATABASE: great_db
-        options: --health-cmd "mysqladmin ping -h localhost" --health-interval 20s --health-timeout 10s --health-retries 10
+          MYSQL_ROOT_PASSWORD: mintaku
+          MYSQL_DATABASE: mintaku
+        # mysql が起動するまで待機するようにヘルスチェックを設定する
+        options: >-
+          --health-cmd "mysqladmin ping -h localhost"
+          --health-interval 20s
+          --health-timeout 10s
+          --health-retries 10
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Build the docker-compose stack # Docker Composeを実行
-        run: docker-compose -f docker-compose.yml up -d
+      # CI テストを実行する前に、リポジトリにコードのコピーをダウンロードする
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
+      # `package.json` ファイル内のすべての依存関係のクリーンインストールを実行する
+      # 詳しい情報については https://docs.npmjs.com/cli/ci.html を参照
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r mintaku/requirememnts.txt
+
       - name: Setup tmate session
         uses: mxschmitt/action-tmate@v3
+
+      - name: Connect to PostgreSQL
+        run: python mintaku/manage.py runserver
