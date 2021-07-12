@@ -12,9 +12,9 @@ jobs:
     # `container-job` で実行するサービスコンテナ
     services:
       # サービスコンテナへのアクセスに使用されるラベル
-      postgres:
+      mysql:
         # Docker Hub のイメージ
-        image: mysql:8
+        image: mysql:5.7
         # postgres のパスワードを入力する
         env:
           MYSQL_ROOT_PASSWORD: mintaku
@@ -38,8 +38,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-
       - name: Connect to PostgreSQL
         run: python manage.py runserver
+
+        env:
+          # MySQLサービスコンテナとの通信に使われるホスト名
+          MYSQL_HOST: mysql
+          # デフォルトのPostgreSQLポート
+          MYSQL_PORT: 3306
