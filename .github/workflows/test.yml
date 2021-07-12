@@ -11,7 +11,11 @@ jobs:
         ports:
           - 3306:3306
         env:
-          MYSQL_ROOT_PASSWORD: hoge_password
+          MYSQL_ROOT_PASSWORD: mysql
+          MYSQL_DATABASE: great_db
+          MYSQL_USER: root
+          MYSQL_PASSWORD: mysql
+          MYSQL_HOST: db
         options: --health-cmd "mysqladmin ping -h localhost" --health-interval 20s --health-timeout 10s --health-retries 10
     steps:
       - name: exec hoge.sql
@@ -20,3 +24,6 @@ jobs:
 
       - name: Build the docker-compose stack # Docker Composeを実行
         run: docker-compose up -d
+      - uses: actions/checkout@v2
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
