@@ -5,22 +5,16 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
-    services:
-      mysql:
-        image: mysql:5.7
-
-        env:
-          MYSQL_ROOT_PASSWORD: mysql
-          MYSQL_DATABASE: great_db
-          MYSQL_USER: root
-          MYSQL_PASSWORD: mysql
-        ports:
-          - 3306:3306
-        options: --health-cmd "mysqladmin ping" --health-interval 10s --health-timeout 5s --health-retries 10
     steps:
-#      - name: exec hoge.sql
-#        run: |
-#          mysql -h 127.0.0.1 --port 3306 -u root -phoge_password -e "$(cat $(find ./ -name hoge.sql))"
+    - uses: mirromutth/mysql-action@v1.1
+      with:
+        host port: 3800 # Optional, default value is 3306. The port of host
+        container port: 3307 # Optional, default value is 3306. The port of container
+        character set server: 'utf8mb4' # Optional, default value is 'utf8mb4'. The '--character-set-server' option for mysqld
+        collation server: 'utf8_general_ci' # Optional, default value is 'utf8mb4_general_ci'. The '--collation-server' option for mysqld
+        mysql version: '8.0' # Optional, default value is "latest". The version of the MySQL
+        mysql database: 'great_db' # Optional, default value is "test". The specified database which will be create
+        mysql root password: 'mysql' # Required if "mysql user" is empty, default is empty. The root superuser password
 
       - name: Build the docker-compose stack # Docker Composeを実行
         run: |
