@@ -15,8 +15,6 @@ jobs:
           mysql version: '8.0' # Optional, default value is "latest". The version of the MySQL
           mysql database: 'great_db' # Optional, default value is "test". The specified database which will be create
           mysql root password: 'mysql' # Required if "mysql user" is empty, default is empty. The root superuser password
-      - name: Build the docker-compose stack # Docker Composeを実行
-        run: docker-compose -f docker-compose.yml up -d
       - uses: actions/checkout@v2
       - name: Setup tmate session
         uses: mxschmitt/action-tmate@v3
