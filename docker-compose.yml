@@ -1,34 +1,5 @@
 version: '3'
 services:
-  api:
-    container_name: api-server
-    build: .
-    ports:
-      - "5000:5000"
-      - "8081:8081"
-    environment:
-      - DB_USER=root
-      - DB_PASS=mysql
-      - DB_PORT=3306
-      - DB_HOST=db
-      - DB_DATABASE=great_db
-    depends_on:
-      - db
-
-  db:
-    platform: linux/x86_64
-    image: mysql:5.7.22
-    container_name: mysql
-    command: mysqld --character-set-server=utf8mb4
-    volumes:
-      - ./db/init:/docker-entrypoint-initdb.d
-      - ./db/mysql/conf.d:/etc/mysql/conf.d
-    restart: always
-    hostname: db
-    environment:
-      - MYSQL_ROOT_PASSWORD=mysql
-      - MYSQL_DATABASE=mixlunch
-
   web:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
@@ -36,5 +7,3 @@ services:
       - .:/code
     ports:
       - "8000:8000"
-    depends_on:
-      - db
