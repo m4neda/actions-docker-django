@@ -19,7 +19,6 @@ jobs:
       - name: Sleep to wait for preparing of containers
         run: sleep 15 # ポイント③
 
-      - uses: actions/checkout@v2
       - name: Setup tmate session
         uses: mxschmitt/action-tmate@v3
 
