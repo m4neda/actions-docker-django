@@ -37,8 +37,8 @@ jobs:
       - name: Connect to MySQL
         run: python client.py
 
-        env:
-          # MySQLサービスコンテナとの通信に使われるホスト名
-          MYSQL_HOST: mysql
-          # デフォルトのPostgreSQLポート
-          MYSQL_PORT: 3306
+#        env:
+#          # MySQLサービスコンテナとの通信に使われるホスト名
+#          MYSQL_HOST: mysql
+#          # デフォルトのPostgreSQLポート
+#          MYSQL_PORT: 3306
