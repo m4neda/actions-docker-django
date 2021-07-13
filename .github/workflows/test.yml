@@ -4,31 +4,20 @@ on: push
 jobs:
   # コンテナジョブのラベル
   container-job:
+    env:
+      DB_DATABASE: mintaku
+      DB_USER: root
+      DB_PASSWORD: root
     # コンテナは Linux ベースのオペレーティングシステムで実行しなければならない
     runs-on: ubuntu-latest
     # `container-job` が実行される Docker Hub イメージ
     container: python:3.7
 
-    # `container-job` で実行するサービスコンテナ
-    services:
-      # サービスコンテナへのアクセスに使用されるラベル
-      mysql:
-        # Docker Hub のイメージ
-        image: mysql:5.7
-        ports:
-          - 3306
-        # postgres のパスワードを入力する
-        env:
-          MYSQL_ROOT_PASSWORD: mintaku
-          MYSQL_DATABASE: mintaku
-        # mysql が起動するまで待機するようにヘルスチェックを設定する
-        options: >-
-          --health-cmd "mysqladmin ping -h localhost"
-          --health-interval 20s
-          --health-timeout 10s
-          --health-retries 10
-
     steps:
+      - name: Set up MySQL
+        run: |
+          sudo systemctl start mysql.service
+          mysql -e 'CREATE DATABASE ${{ env.DB_DATABASE }};' -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }}
       # CI テストを実行する前に、リポジトリにコードのコピーをダウンロードする
       - name: Check out repository code
         uses: actions/checkout@v2

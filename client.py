@@ -3,8 +3,7 @@ from mysql.connector import errorcode
 
 try:
     cnx = mysql.connector.connect(user='root',
-                                  password='mintaku',
-                                  host='mysql',
+                                  password='root',
                                   database='mintaku',
                                   port=3306)
 except mysql.connector.Error as err:
