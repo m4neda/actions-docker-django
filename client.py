@@ -11,9 +11,8 @@ except mysql.connector.Error as err:
     else:
         print(err)
 else:
-    cnx.close()
+    conn = cnx
 
-conn = cnx
 print(conn.is_connected())
 cur = conn.cursor()
 
