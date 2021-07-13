@@ -27,9 +27,6 @@ jobs:
           --health-retries 10
 
     steps:
-      - name: Shutdown Ubuntu MySQL (SUDO)
-        run: sudo service mysql stop # Shutdown the Default MySQL, "sudo" is necessary, please not remove it
-
       # CI テストを実行する前に、リポジトリにコードのコピーをダウンロードする
       - name: Check out repository code
         uses: actions/checkout@v2
@@ -42,7 +39,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Connect to PostgreSQL
-        run: python manage.py runserver
+        run: python client.py
 
         env:
           # MySQLサービスコンテナとの通信に使われるホスト名
