@@ -4,16 +4,20 @@ on: push
 jobs:
   # コンテナジョブのラベル
   container-job:
+    # コンテナは Linux ベースのオペレーティングシステムで実行しなければならない
+    runs-on: ubuntu-latest
+
     env:
       DB_DATABASE: mintaku
       DB_USER: root
       DB_PASSWORD: root
-    # コンテナは Linux ベースのオペレーティングシステムで実行しなければならない
-    runs-on: ubuntu-latest
+      DB_HOST: localhost
     # `container-job` が実行される Docker Hub イメージ
     container: python:3.7
 
     steps:
+      - name: Install sudo
+        run: apt update && apt install sudo
       - name: Set up MySQL
         run: |
           sudo systemctl start mysql.service
