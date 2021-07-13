@@ -15,8 +15,6 @@ jobs:
     # `container-job` が実行される Docker Hub イメージ
 
     steps:
-      - name: Install sudo
-        run: apt update && apt install sudo
       - name: Set up MySQL
         run: |
           sudo systemctl start mysql.service
